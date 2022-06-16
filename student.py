@@ -1,4 +1,6 @@
 from datetime import date, timedelta
+import requests  # fictional API service
+
 
 class Student:
     """
@@ -12,16 +14,26 @@ class Student:
         self.end_date = date.today() + timedelta(days=365)
         self.naughty_list = False
 
-
     @property
     def full_name(self):
         return f"{self._first_name} {self._last_name}"
 
-    
     @property
     def email(self):
-        return f"{self._first_name.lower()}.{self._last_name.lower()}@email.com"
+        return
+        f"{self._first_name.lower()}.{self._last_name.lower()}@email.com"
 
+    def apply_extension(self, days):
+        self.end_date = self.end_date + timedelta(days=days)
 
     def alert_santa(self):
         self.naughty_list = True
+
+# test for bugs in API, beyond dev control
+    def course_schedule(self):
+        response = requests.get(f"http://company.com/course-schedule/{self._last_name}/{self._first_name}")
+
+        if response.ok:
+            return response.text
+        else:
+            return "Something went wrong with the request!"
